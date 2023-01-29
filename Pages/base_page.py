@@ -13,3 +13,7 @@ class BasePage:
 
     def finds(self, args):
         return self.driver.find_elements(*args)
+
+
+   # def scroll(self, *args):
+   #     return self.driver.execute_script(f"window.scrollTo({args}, document.body.scrollHeight);")
