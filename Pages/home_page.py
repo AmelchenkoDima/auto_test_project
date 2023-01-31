@@ -1,9 +1,8 @@
 from Pages.base_page import BasePage
 from Pages.Locators import locators_home_page as locator_1
-from selenium.webdriver.support.ui import Select
-
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 # WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.all_brands_button))
@@ -42,6 +41,27 @@ class HomePage(BasePage):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.filter_search_button))
         return self.find(locator_1.filter_search_button).click()
 
-    def scroll_all_brands_button(self):
-        return self.driver.execute_script(f"window.scrollTo(0, {locator_1.scroll_all_brands});")
+    def dodge_button_click(self):
+        return self.find(locator_1.dodge_button).click()
+
+    def sort_button_min_click(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_sort))
+        return ActionChains(
+            self.driver
+        ).click(
+            self.find(
+                locator_1.dropdown_sort
+            )
+        ).click(
+            self.find(
+                locator_1.dropdown_sort_min
+            )
+        )
+
+    def price_usd(self):
+        return self.find(locator_1.price_usd).text
+
     # На данном этапе скролл не нужен
+    def scroll(self):
+        return self.driver.execute_script(f"window.scrollTo(0, {locator_1.scroll_all_brands});")
+
