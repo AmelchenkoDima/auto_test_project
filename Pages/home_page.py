@@ -26,8 +26,8 @@ class HomePage(BasePage):
     def lexus_button_click(self):
         return self.find(locator_1.lexus_button).click()
 
-    def car_header(self):
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.car_header))
+    def car_header(self, text):
+        WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element(locator_1.car_header, text))
         return self.find(locator_1.car_header).text
 
     def toyota_button_click(self):
@@ -46,7 +46,28 @@ class HomePage(BasePage):
     def dropdown_bmw_click(self):
         return self.find(locator_1.dropdown_bmw).click()
 
-# Нужно настроить ожид
+    def dropdown_audi_click(self):
+        return self.find(locator_1.dropdown_audi).click()
+
+    def model_dropdown_click(self):
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator_1.dropdown_model))
+        return self.find(locator_1.dropdown_model).click()
+
+    def model_dropdown_audi_80(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_audi_80))
+        return self.find(locator_1.dropdown_audi_80).click()
+
+    def generation_dropdown_click(self):
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator_1.dropdown_generation))
+        return self.find(locator_1.dropdown_generation).click()
+
+    def generation_dropdown_audi_80_b4(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_audi_80_b4))
+        return self.find(locator_1.dropdown_audi_80_b4).click()
+
+    def car_model(self):
+        return self.find(locator_1.car_model).text
+
     def filter_search_button_click(self, atr, text):
         WebDriverWait(self.driver, 10).until(
             EC.text_to_be_present_in_element_attribute
@@ -62,14 +83,39 @@ class HomePage(BasePage):
         return self.find(locator_1.dodge_button).click()
 
     def sort_button_click(self):
-        return self.find(locator_1.dropdown_sort)
+        return self.find(locator_1.dropdown_sort).click()
 
     def sort_button_min_click(self):
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_sort))
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_sort_min))
         return self.find(locator_1.dropdown_sort_min).click()
 
-    def price_usd(self):
+    def sort_button_max_click(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_sort_max))
+        return self.find(locator_1.dropdown_sort_max).click()
+
+    def sort_button_min_mileage_click(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_sort_max))
+        return self.find(locator_1.dropdown_sort_min_mileage).click()
+
+    def sort_button_new_click(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_sort_max))
+        return self.find(locator_1.dropdown_sort_new).click()
+
+    def sort_button_old_click(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_sort_max))
+        return self.find(locator_1.dropdown_sort_old).click()
+
+    def price_usd(self, price):
+        WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element(locator_1.price_usd, price))
         return self.find(locator_1.price_usd).text
+
+    def year_of_manufacture(self, year):
+        WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element(locator_1.year_of_manufacture, year))
+        return self.find(locator_1.year_of_manufacture).text
+
+    def mileage_car(self, mileage):
+        WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element(locator_1.mileage, mileage))
+        return self.find(locator_1.mileage).text
 
     def login_button(self):
         return self.find(locator_1.login_button).click()

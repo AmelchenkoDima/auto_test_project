@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.options import Options
 import pytest
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def driver():
     options = Options()
     options.add_argument('start-maximized')

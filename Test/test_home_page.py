@@ -1,15 +1,16 @@
 from Pages.home_page import HomePage
 from Pages.Locators import login_field_arguments as arg
+from Pages.Locators import cars_attribute as cars
 from time import sleep
 
-
+#Тусты проверки авто
 #Тест: 1 авто из закрытого списка
 def test_open_car_list(driver):
     home_cars_page = HomePage(driver)
     home_cars_page.open()
     home_cars_page.cookies_window_close()
     home_cars_page.lexus_button_click()
-    assert home_cars_page.car_header() == 'Продажа автомобилей Lexus (Лексус) в Беларуси'
+    assert home_cars_page.car_header(cars.lexus_header) == 'Продажа автомобилей Lexus (Лексус) в Беларуси'
 
 
 #Тест: 1 авто из раскрытого списка
@@ -19,7 +20,7 @@ def test_open_car_expanded_list(driver):
     home_cars_page.cookies_window_close()
     home_cars_page.click_all_brands_button()
     home_cars_page.toyota_button_click()
-    assert home_cars_page.car_header() == 'Продажа автомобилей Toyota (Тойота) в Беларуси'
+    assert home_cars_page.car_header(cars.toyota_header) == 'Продажа автомобилей Toyota (Тойота) в Беларуси'
 
 
 #Тест: Молель авто из списка
@@ -31,8 +32,7 @@ def test_open_car_toyota_gt(driver):
     home_cars_page.toyota_button_click()
     home_cars_page.scroll()
     home_cars_page.toyota_gt_button_click()
-    sleep(3) #временный слип тк страница не успевает прогрузится
-    assert home_cars_page.car_header() == 'Продажа автомобилей Toyota GT 86'
+    assert home_cars_page.car_header(cars.toyota_gt_header) == 'Продажа автомобилей Toyota GT 86'
 
 
 #Тест: 1 авто из выпадающего списка
@@ -42,40 +42,83 @@ def test_open_car_dropdown(driver):
     home_cars_page.cookies_window_close()
     home_cars_page.brands_dropdown_click()
     home_cars_page.dropdown_alfa_romeo_click()
-    home_cars_page.filter_search_button_click() #урл ожид
-    assert home_cars_page.car_header() == 'Продажа автомобилей Alfa Romeo (Альфа Ромео) в Беларуси'
+    home_cars_page.filter_search_button_click('href', cars.alfa_romeo_header)
+    assert home_cars_page.car_header(
+        cars.alfa_romeo_header
+    ) == 'Продажа автомобилей Alfa Romeo (Альфа Ромео) в Беларуси'
 
 
-#Тест: Мин цена
+#Тест: Поколение автомобиля
+def test_open_car_generation(driver):
+    home_cars_page = HomePage(driver)
+    home_cars_page.open()
+    home_cars_page.cookies_window_close()
+    home_cars_page.brands_dropdown_click()
+    home_cars_page.dropdown_audi_click()
+    home_cars_page.model_dropdown_click()
+    home_cars_page.model_dropdown_audi_80()
+    home_cars_page.generation_dropdown_click()
+    home_cars_page.generation_dropdown_audi_80_b4()
+    home_cars_page.filter_search_button_click('href', cars.audi)
+    assert home_cars_page.car_model() == 'Audi 80 B4'
+
+
+#Тесты сортировки
+#Тест: Минимальная цена
 def test_check_min_price(driver):
     home_cars_page = HomePage(driver)
     home_cars_page.open()
     home_cars_page.cookies_window_close()
     home_cars_page.dodge_button_click()
-    #sleep(2)
-    #home_cars_page.scroll()
-    #sleep(2)
     home_cars_page.sort_button_click()
     home_cars_page.sort_button_min_click()
-
-    #sleep(5)
-    assert home_cars_page.price_usd() == '600'
-    '''не находит путь к списку сортировки'''
+    assert home_cars_page.price_usd(cars.min_price) == '≈ 600 $'
 
 
-#Тест: Макс цена
+#Тест: Максимальная цена
 def test_check_max_price(driver):
     home_cars_page = HomePage(driver)
     home_cars_page.open()
     home_cars_page.cookies_window_close()
     home_cars_page.brands_dropdown_click()
-    home_cars_page.scroll()
     home_cars_page.dropdown_bmw_click()
-    home_cars_page.filter_search_button_click()
-    home_cars_page.scroll()
-    sleep(3)
+    home_cars_page.filter_search_button_click('href', cars.bmw)
     home_cars_page.sort_button_click()
-    sleep(3)
+    home_cars_page.sort_button_max_click()
+    assert home_cars_page.price_usd(cars.max_price) == '≈ 281 007 $'
+
+
+#Тест: Минимальнаый пробег
+def test_check_min_mileage(driver):
+    home_cars_page = HomePage(driver)
+    home_cars_page.open()
+    home_cars_page.cookies_window_close()
+    home_cars_page.filter_search_button_click('href', cars.all)
+    home_cars_page.sort_button_click()
+    home_cars_page.sort_button_min_mileage_click()
+    assert home_cars_page.mileage_car(cars.min_mileage) == '1 км'
+
+
+#Тест: Новые по году выпуска
+def test_check_new_cars(driver):
+    home_cars_page = HomePage(driver)
+    home_cars_page.open()
+    home_cars_page.cookies_window_close()
+    home_cars_page.filter_search_button_click('href', cars.all)
+    home_cars_page.sort_button_click()
+    home_cars_page.sort_button_new_click()
+    assert home_cars_page.year_of_manufacture(cars.year_new) == '2023 г.'
+
+
+#Тест: Старые по году выпуска
+def test_check_old_cars(driver):
+    home_cars_page = HomePage(driver)
+    home_cars_page.open()
+    home_cars_page.cookies_window_close()
+    home_cars_page.filter_search_button_click('href', cars.all)
+    home_cars_page.sort_button_click()
+    home_cars_page.sort_button_old_click()
+    assert home_cars_page.year_of_manufacture(cars.year_old) == '1933 г.'
 
 
 # Тесты регистрации невалидные значения
@@ -277,7 +320,7 @@ def test_register_invalid_password_less_than_8_characters(driver):
     assert home_cars_page.mail_error_message() == 'Минимум 8 символов'
 
 
-def test_register_invalid_password_aql(driver):
+def test_register_invalid_password_sql(driver):
     home_cars_page = HomePage(driver)
     home_cars_page.open()
     home_cars_page.cookies_window_close()
