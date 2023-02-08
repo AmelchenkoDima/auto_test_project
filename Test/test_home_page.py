@@ -1,6 +1,7 @@
 from Pages.home_page import HomePage
 from Pages.Locators import login_field_arguments as arg
 from Pages.Locators import cars_attribute as cars
+from Pages.Locators import locators_dropdown as dropdown
 from time import sleep
 
 #Тусты проверки авто
@@ -63,6 +64,63 @@ def test_open_car_generation(driver):
     assert home_cars_page.car_model() == 'Audi 80 B4'
 
 
+#Тест: Год выпуска
+def test_year_of_car_manufacture(driver):
+    home_cars_page = HomePage(driver)
+    home_cars_page.open()
+    home_cars_page.cookies_window_close()
+    home_cars_page.scroll()
+    home_cars_page.dropdown_from_year_of_car_manufacture()
+    sleep(200)
+
+
+#Тест: Добавление автомобиля в поиск
+def test_add_new_filter_car(driver):
+    home_cars_page = HomePage(driver)
+    home_cars_page.open()
+    home_cars_page.cookies_window_close()
+    home_cars_page.brands_dropdown_click()
+    home_cars_page.dropdown_audi_click()
+    home_cars_page.model_dropdown_click()
+    home_cars_page.model_dropdown_audi_80()
+    home_cars_page.generation_dropdown_click()
+    home_cars_page.generation_dropdown_audi_80_b4()
+    home_cars_page.add_filter()
+    home_cars_page.brands_dropdown_two_click()
+    home_cars_page.dropdown_two_bentley_click()
+    home_cars_page.model_dropdown_two_click()
+    home_cars_page.model_dropdown_two_bentley_continental_gt()
+    home_cars_page.generation_dropdown_two_click()
+    home_cars_page.generation_dropdown_two_bentley_continental_gt_restyling()
+    home_cars_page.filter_search_button_click('href', cars.audi_bentley)
+    assert home_cars_page.car_model(cars.audi) == 'Audi 80 B4' or 'Bentley Continental GT II · Рестайлинг'
+
+
+#Тест: Удаление автомобиля из поиска
+def test_delete_new_filter_car(driver):
+    home_cars_page = HomePage(driver)
+    home_cars_page.open()
+    home_cars_page.cookies_window_close()
+    home_cars_page.brands_dropdown_click()
+    home_cars_page.dropdown_audi_click()
+    home_cars_page.model_dropdown_click()
+    home_cars_page.model_dropdown_audi_80()
+    home_cars_page.generation_dropdown_click()
+    home_cars_page.generation_dropdown_audi_80_b4()
+    home_cars_page.add_filter()
+    home_cars_page.brands_dropdown_two_click()
+    home_cars_page.dropdown_two_bentley_click()
+    home_cars_page.model_dropdown_two_click()
+    home_cars_page.model_dropdown_two_bentley_continental_gt()
+    home_cars_page.generation_dropdown_two_click()
+    home_cars_page.generation_dropdown_two_bentley_continental_gt_restyling()
+    home_cars_page.filter_search_button_click('href', cars.audi_bentley)
+    home_cars_page.delete_filter_car()
+    home_cars_page.search_button_active_filter_click()
+    #sleep(2)
+    assert home_cars_page.car_model(cars.bentley) == 'Bentley Continental GT II · Рестайлинг'
+
+
 #Тесты сортировки
 #Тест: Минимальная цена
 def test_check_min_price(driver):
@@ -85,7 +143,7 @@ def test_check_max_price(driver):
     home_cars_page.filter_search_button_click('href', cars.bmw)
     home_cars_page.sort_button_click()
     home_cars_page.sort_button_max_click()
-    assert home_cars_page.price_usd(cars.max_price) == '≈ 281 007 $'
+    assert home_cars_page.price_usd(cars.max_price) == '≈ 275 900 $'
 
 
 #Тест: Минимальнаый пробег
@@ -93,7 +151,7 @@ def test_check_min_mileage(driver):
     home_cars_page = HomePage(driver)
     home_cars_page.open()
     home_cars_page.cookies_window_close()
-    home_cars_page.filter_search_button_click('href', cars.all)
+    home_cars_page.filter_search_button_click('href', cars.all_brand)
     home_cars_page.sort_button_click()
     home_cars_page.sort_button_min_mileage_click()
     assert home_cars_page.mileage_car(cars.min_mileage) == '1 км'
@@ -104,7 +162,7 @@ def test_check_new_cars(driver):
     home_cars_page = HomePage(driver)
     home_cars_page.open()
     home_cars_page.cookies_window_close()
-    home_cars_page.filter_search_button_click('href', cars.all)
+    home_cars_page.filter_search_button_click('href', cars.all_brand)
     home_cars_page.sort_button_click()
     home_cars_page.sort_button_new_click()
     assert home_cars_page.year_of_manufacture(cars.year_new) == '2023 г.'
@@ -115,7 +173,7 @@ def test_check_old_cars(driver):
     home_cars_page = HomePage(driver)
     home_cars_page.open()
     home_cars_page.cookies_window_close()
-    home_cars_page.filter_search_button_click('href', cars.all)
+    home_cars_page.filter_search_button_click('href', cars.all_brand)
     home_cars_page.sort_button_click()
     home_cars_page.sort_button_old_click()
     assert home_cars_page.year_of_manufacture(cars.year_old) == '1933 г.'

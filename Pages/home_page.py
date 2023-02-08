@@ -40,6 +40,9 @@ class HomePage(BasePage):
     def brands_dropdown_click(self):
         return self.find(locator_1.dropdown_brands).click()
 
+    def brands_dropdown_two_click(self):
+        return self.find(locator_1.dropdown_two_brands).click()
+
     def dropdown_alfa_romeo_click(self):
         return self.find(locator_1.dropdown_alfa_romeo).click()
 
@@ -49,23 +52,69 @@ class HomePage(BasePage):
     def dropdown_audi_click(self):
         return self.find(locator_1.dropdown_audi).click()
 
+    def dropdown_two_bentley_click(self):
+        return self.find(locator_1.dropdown_bentley).click()
+
     def model_dropdown_click(self):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator_1.dropdown_model))
         return self.find(locator_1.dropdown_model).click()
+
+    def model_dropdown_two_click(self):
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator_1.dropdown_tow_model))
+        return self.find(locator_1.dropdown_tow_model).click()
 
     def model_dropdown_audi_80(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_audi_80))
         return self.find(locator_1.dropdown_audi_80).click()
 
+    def model_dropdown_two_bentley_continental_gt(self):
+        WebDriverWait(
+            self.driver,
+            10
+        ).until(
+            EC.presence_of_element_located
+            (
+                locator_1.dropdown_bentley_continental_gt
+            )
+        )
+        return self.find(locator_1.dropdown_bentley_continental_gt).click()
+
     def generation_dropdown_click(self):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator_1.dropdown_generation))
         return self.find(locator_1.dropdown_generation).click()
+
+    def generation_dropdown_two_click(self):
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(locator_1.dropdown_tow_generation))
+        return self.find(locator_1.dropdown_tow_generation).click()
 
     def generation_dropdown_audi_80_b4(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_audi_80_b4))
         return self.find(locator_1.dropdown_audi_80_b4).click()
 
-    def car_model(self):
+    def generation_dropdown_two_bentley_continental_gt_restyling(self):
+        WebDriverWait(
+            self.driver,
+            10
+        ).until(
+            EC.presence_of_element_located
+            (
+                locator_1.dropdown_bentley_continental_gt_restyling
+            )
+        )
+        return self.find(locator_1.dropdown_bentley_continental_gt_restyling).click()
+
+    def add_filter(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.add_filter_button))
+        return self.find(locator_1.add_filter_button).click()
+
+#НЕ НАХОДИТ ЭЛЛЕМЕНТ!!!
+    def dropdown_from_year_of_car_manufacture(self):
+        #WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.year_of_manufacture))
+        return self.find(locator_1.year_of_manufacture).click()
+        #return self.find(*arg).click()
+
+    def car_model(self, text):
+        WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element(locator_1.car_model, text))
         return self.find(locator_1.car_model).text
 
     def filter_search_button_click(self, atr, text):
@@ -79,8 +128,16 @@ class HomePage(BasePage):
         )
         return self.find(locator_1.filter_search_button).click()
 
+    def search_button_active_filter_click(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.search_button_active_filter))
+        return self.find(locator_1.search_button_active_filter).click()
+
     def dodge_button_click(self):
         return self.find(locator_1.dodge_button).click()
+
+    def delete_filter_car(self):
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.delete_filter_button))
+        return self.find(locator_1.delete_filter_button).click()
 
     def sort_button_click(self):
         return self.find(locator_1.dropdown_sort).click()
