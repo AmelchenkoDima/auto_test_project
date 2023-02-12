@@ -59,20 +59,51 @@ class HomePage(BasePage):
         return self.find(arg).click()
 
     def dropdown_body(self, body):
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.dropdown_body))
         self.find(locator_1.dropdown_body).click()
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(body))
         return self.find(body).click()
+
+    def dropdown_body_two(self, body1=None, body2=None):
+        self.find(locator_1.dropdown_body).click()
+        self.find(body1).click()
+        return self.find(body2).click()
+
+    def dropdown_body_four(self, body1=None, body2=None, body3=None, body4=None):
+        self.find(locator_1.dropdown_body).click()
+        self.find(body1).click()
+        self.find(body2).click()
+        self.find(body3).click()
+        return self.find(body4).click()
+
+    def dropdown_engine_type(self, engine):
+        self.find(locator_1.dropdown_engine_type).click()
+        self.find(engine).click()
+        return self.find(locator_1.dropdown_engine_type).click()
+
+    def dropdown_engine_type_two(self, engine1=None, engine2=None):
+        self.find(locator_1.dropdown_engine_type).click()
+        self.find(engine1).click()
+        self.find(engine2).click()
+        return self.find(locator_1.dropdown_engine_type).click()
+
+    def dropdown_engine_type_four(self, engine1=None, engine2=None, engine3=None, engine4=None):
+        self.find(locator_1.dropdown_engine_type).click()
+        self.find(engine1).click()
+        self.find(engine2).click()
+        self.find(engine3).click()
+        self.find(engine4).click()
+        return self.find(locator_1.dropdown_engine_type).click()
 
     def add_filter(self):
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.add_filter_button))
         return self.find(locator_1.add_filter_button).click()
 
-#НЕ НАХОДИТ ЭЛЛЕМЕНТ!!!
-    def dropdown_from_year_of_car_manufacture(self):
-        #WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator_1.year_of_manufacture))
-        return self.find(locator_1.year_of_manufacture).click()
-        #return self.find(*arg).click()
+    def dropdown_from_year_of_car_manufacture(self, arg):
+        self.find(locator_1.dropdown_from_year).click()
+        return self.find(arg).click()
+
+    def dropdown_until_year_of_car_manufacture(self, arg):
+        self.find(locator_1.dropdown_until_year).click()
+        return self.find(arg).click()
 
     def car_model(self, text):
         WebDriverWait(self.driver, 10).until(EC.text_to_be_present_in_element(locator_1.car_model, text))
