@@ -1,5 +1,4 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.support.ui import Select
 
 
 class BasePage:
@@ -14,11 +13,3 @@ class BasePage:
 
     def finds(self, args):
         return self.driver.find_elements(*args)
-
-    def select(self, args):
-        return self.Select(self.driver.find_element(*args))
-
-
-
-# def scroll(self, *args):
-   #     return self.driver.execute_script(f"window.scrollTo({args}, document.body.scrollHeight);")
